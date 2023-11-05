@@ -43,5 +43,7 @@ Weighted Round Robin is an advanced load balancing technique employed in network
 ## How to run
 `sudo python src/main.py topology/inherent.conf`
 
+<b>edit di branch `dev` kemudian pull request ke `main'</b>
+
 ### References
 [1] https://webhostinggeeks.com/blog/what-is-weighted-round-robin/
