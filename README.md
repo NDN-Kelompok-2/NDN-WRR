@@ -1,20 +1,41 @@
-# NDN-WRR
+# Weighted Round Robin Load Balancing in Mini-NDN using Inherent Topology                                         
+## What is Weighted Round Robin?
+Weighted Round Robin is an advanced load balancing technique employed in network scheduling. Weighted Round Robin takes into account the processing power or ‘weight’ of each server in the network. This means that a server with a higher weight, indicating superior capacity, is assigned a larger share of the requests compared to a server with a lower weight.This method of load distribution is more efficient as it aligns the workload with the server’s capacity, thereby enhancing network performance and user experience. It also minimizes the likelihood of server overload by preventing any single server from being overwhelmed with requests, ensuring a balanced and efficient network operation.
 
-## Git branching
-repository akan memiliki 2 branch utama, yaitu master dan development.
-Setiap pembuatan branch baru, buat <ins>branch baru</ins> dengan base master.
-Setelah selesai, <b>Pull Request</b> ke master.
+<br>
+<p>Disusun oleh:</p>
+<p>Kelompok 2</p>
+<table border = "1">
+  <tr>
+    <td><b>NIM</b></td>
+    <td><b>Nama</b></td>
+  </tr>
+  
+   <tr>
+    <td>18121019</td>
+    <td>Syah Muafa Al Kautsar</td>
+  </tr>
 
-## Code Styling & Repository
+  <tr>
+    <td>18121021</td>
+    <td>Albert</td>
+  </tr>
+  
+  <tr>
+    <td>18121024</td>
+    <td>Gatra Akhira</td>
+  </tr>
+  
+  <tr>
+    <td>18121034</td>
+    <td>Muhammad Arrifqi</td>
+  </tr>
 
-Sangat dimohon untuk memperhatikan hal-hal berikut:
-1. Penamaan variabel, fungsi, dan kelas yang bermakna
-2. Penyingkatan harus mudah ditebak dan masih terbaca
-    - Misalkan, codeStylingAndRepository, terlalu panjang, disingkat menjadi: codeStyleNRepo
-    - Yang Salah: csnr, cdStNrep
-      3.Membuat kelas dengan pascal case (ClassName)
-3. Membuat fungsi dan variable dengan camel case (fungsiDanVariabel)
-4. Membuat folder dengan snake case (folder_styling)
-5. Membuat file dengan kebab case (file-styling.py)
+  <tr>
+    <td>18121040</td>
+    <td>Achmad Kabir Rifa’i</td>
+  </tr>
+</table>
 
-## Full SOP can be found here: [SOP Developers](https://docs.google.com/document/d/12Ko3DKYiEBoLxn1Z0gpVBmrNwEv4rm6LfWiPOCkqy00/edit#)
+## How to run
+`sudo python src/main.py topology/inherent.conf`
