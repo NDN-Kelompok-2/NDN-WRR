@@ -2,6 +2,8 @@
 ## What is Weighted Round Robin?
 Weighted Round Robin is an advanced load balancing technique employed in network scheduling. Weighted Round Robin takes into account the processing power or ‘weight’ of each server in the network. This means that a server with a higher weight, indicating superior capacity, is assigned a larger share of the requests compared to a server with a lower weight.This method of load distribution is more efficient as it aligns the workload with the server’s capacity, thereby enhancing network performance and user experience. It also minimizes the likelihood of server overload by preventing any single server from being overwhelmed with requests, ensuring a balanced and efficient network operation.
 
+![Uploading sensors-20-07342-g002.png…]()
+
 <br>
 <p>Disusun oleh:</p>
 <p>Kelompok 2</p>
