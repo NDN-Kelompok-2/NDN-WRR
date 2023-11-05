@@ -7,8 +7,7 @@ Weighted Round Robin is an advanced load balancing technique employed in network
 </p>
 
 <br>
-<p>Disusun oleh:</p>
-<p>Kelompok 2</p>
+<p>Disusun oleh: Kelompok 2</p>
 <table border = "1">
   <tr>
     <td><b>NIM</b></td>
