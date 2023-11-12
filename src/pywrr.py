@@ -36,7 +36,7 @@ class WRRScheduler():
                     self.cw = self.max_s
                     if self.cw <= 0:
                         return None
-            if self.data_set[self.i][1] >= self.cw:
+            if self.data_set[self.i][1] == self.cw:
                 self._inc_counter(self.data_set[self.i]) 
                 return self.data_set[self.i]
 

@@ -31,10 +31,10 @@ def run():
     ndn = Minindn()
     ndn.start()
     host_consumer = "ui"
-    host_producer1 = "serang"
-    host_producer2 = "dikti"
-    host_producer3 = "jayapura"
-    host_producer4 = "bandung"
+    host_producer1 = "a"
+    host_producer2 = "b"
+    host_producer3 = "c"
+    host_producer4 = "d"
     host_intermediate1 = "satelit"
     host_intermediate2 = "vsatui"
 
@@ -60,6 +60,7 @@ def run():
     
     # Find the item with the maximum count
     max_item, max_count = item_counts.most_common(1)[0]
+ 
 
     # Configure and start NFD on each node
     info("Starting NFD on nodes\n")
@@ -72,10 +73,14 @@ def run():
     pingserver_log = open("{}/ndnpingserver.log".format(ndn.workDir), "w")
     getPopen(ndn.net[host_producer1], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
     getPopen(ndn.net[host_producer2], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
-
+    getPopen(ndn.net[host_producer3], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
+    getPopen(ndn.net[host_producer4], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
+    
     info("Advertising NLSR\n")
     getPopen(ndn.net[host_producer1], "nlsrc advertise {}".format(PREFIX))
     getPopen(ndn.net[host_producer2], "nlsrc advertise {}".format(PREFIX))
+    getPopen(ndn.net[host_producer3], "nlsrc advertise {}".format(PREFIX))
+    getPopen(ndn.net[host_producer4], "nlsrc advertise {}".format(PREFIX))
 
     # Activate intermediate nodes only if jayapura is active too
     # getPopen(ndn.net[host_producer3], "nlsrc advertise {}".format(PREFIX))
@@ -91,6 +96,7 @@ def run():
     	print(f"Sending packet to {selected_node}")
     	# Modify this section for your packet sending logic
     	if selected_node == max_item[0]:
+    	    print(f"Sending packet to {selected_node}")
     	    # Send a packet to host_producer1
     	    getPopen(ndn.net[host_consumer], f"ndnping {PREFIX}/{selected_node} -c 1", stdout=PIPE, stderr=PIPE)
     	    
