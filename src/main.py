@@ -31,19 +31,21 @@ def run():
     ndn = Minindn()
     ndn.start()
     host_consumer = "ui"
-    host_producer1 = "serang"
-    host_producer2 = "dikti"
-    host_producer3 = "jayapura"
-    host_producer4 = "bandung"
+    host_producer1 = "a"
+    host_producer2 = "b"
+    host_producer3 = "c"
+    host_producer4 = "d"
+    #host_producer5 = "e"
     host_intermediate1 = "satelit"
     host_intermediate2 = "vsatui"
 
     # Assign weights to your nodes
     weights = {
-        host_producer1: 1,
-        host_producer2: 2,
-        host_producer3: 1,
-        host_producer4: 2,
+        host_producer1: 4,
+        host_producer2: 3,
+        host_producer3: 3,
+        host_producer4: 1,
+        #host_producer5: 5,
     }
     
     # Convert the dictionary to a list of tuples
@@ -53,13 +55,21 @@ def run():
     sched = pywrr.WRRScheduler(weights_list)
     
     # alternative method of fetching 100 schedule decisions ahead
-    result_alt = sched.get_next(100)
-    
-    # Use Counter to count the occurrences of each item in result_alt
-    item_counts = Counter(result_alt)
-    
+    max = 0
+    n =0
+    for i in weights: 
+    	max+=weights[i]
+    	n+=1
+
+    result_alt = sched.get_next(max)
+   
+   
+    weights_list = list(weights.items())
     # Find the item with the maximum count
-    max_item, max_count = item_counts.most_common(1)[0]
+    max_count = result_alt[1]
+    max_item = result_alt[0]
+    max_count+=1
+ 	
 
     # Configure and start NFD on each node
     info("Starting NFD on nodes\n")
@@ -72,10 +82,14 @@ def run():
     pingserver_log = open("{}/ndnpingserver.log".format(ndn.workDir), "w")
     getPopen(ndn.net[host_producer1], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
     getPopen(ndn.net[host_producer2], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
-
+    getPopen(ndn.net[host_producer3], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
+    getPopen(ndn.net[host_producer4], "ndnpingserver {}".format(PREFIX), stdout=pingserver_log, stderr=pingserver_log)
+    
     info("Advertising NLSR\n")
     getPopen(ndn.net[host_producer1], "nlsrc advertise {}".format(PREFIX))
     getPopen(ndn.net[host_producer2], "nlsrc advertise {}".format(PREFIX))
+    getPopen(ndn.net[host_producer3], "nlsrc advertise {}".format(PREFIX))
+    getPopen(ndn.net[host_producer4], "nlsrc advertise {}".format(PREFIX))
 
     # Activate intermediate nodes only if jayapura is active too
     # getPopen(ndn.net[host_producer3], "nlsrc advertise {}".format(PREFIX))
@@ -86,16 +100,20 @@ def run():
     info("NLSR advertised\n")
 
     # Implement your packet sending logic here
-    for i in range(10):
+    sched = pywrr.WRRScheduler(weights_list)
+   
+    for i in range(max):
     	selected_node = sched.get_next()
+    	if selected_node == None:
+    	    break
     	print(f"Sending packet to {selected_node}")
+    	
     	# Modify this section for your packet sending logic
-    	if selected_node == max_item[0]:
-    	    # Send a packet to host_producer1
-    	    getPopen(ndn.net[host_consumer], f"ndnping {PREFIX}/{selected_node} -c 1", stdout=PIPE, stderr=PIPE)
-    	    
-    	    # Add conditions for other nodes as needed
-    	    time.sleep(1)  # Wait for a moment between sending packets
+    	# if selected_node == a+100:
+    	# print(f"Sending packet to {selected_node}
+    	
+    	# Add conditions for other nodes as needed
+    	time.sleep(1)  # Wait for a moment between sending packets
 
     MiniNDNCLI(ndn.net)
     ndn.stop()
