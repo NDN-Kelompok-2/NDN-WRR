@@ -28,18 +28,25 @@ class WRRScheduler():
         self.len_s = len(s)
 
     def schedule(self):
-        while True:
+        # print(self.data_set)
+        while True and self.data_set[self.i][1] >= 0:
             self.i = (self.i + 1) % self.len_s
             if self.i == 0:
                 self.cw = self.cw - self.gcd_s
                 if self.cw <= 0:                    # <= or >?
                     self.cw = self.max_s
                     if self.cw <= 0:
-                        return None
+                    	 return None
+            
             if self.data_set[self.i][1] == self.cw:
                 self._inc_counter(self.data_set[self.i]) 
+                new_value = self.data_set[self.i][1] - 1
+                self.data_set[self.i] = (self.data_set[self.i][0],new_value)
                 return self.data_set[self.i]
-
+                # print(self.data_set[self.i])
+                # if self.data_set[self.i][1] != self.cw :
+                # 	print("here")
+             
     def _inc_counter(self, item):
         try:
             self.counter[item[0]] += 1
@@ -63,6 +70,6 @@ class WRRScheduler():
         self.reset_counter()
 
     def get_next(self, n = 1):
-        if n > 1:
-            return [ self.schedule() for i in range(0,n) ]
+        #if n > 1:
+        	#return [ self.schedule() for i in range(0,n) ]
         return self.schedule()
