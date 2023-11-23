@@ -115,6 +115,23 @@ def run():
     	# Add conditions for other nodes as needed
     	time.sleep(1)  # Wait for a moment between sending packets
 
+     # start ping client
+    ping1 = getPopen(ndn.net["a"], "ndnping {} -c 5".format(PREFIX), stdout=PIPE, stderr=PIPE)
+    ping1.wait()
+    printOutput(ping1.stdout.read())
+
+    interface = ndn.net["b"].connectionsTo(ndn.net["a"])[0][0]
+    info("Failing link\n") # failing link by setting link loss to 100%
+    interface.config(delay="10ms", bw=10, loss=100)
+    info ("\n starting ping2 client \n")
+
+    ping2 = getPopen(ndn.net["a"], "ndnping {} -c 5".format(PREFIX), stdout=PIPE, stderr=PIPE)
+    ping2.wait()
+    printOutput(ping2.stdout.read())
+
+    interface.config(delay="10ms", bw=10, loss=0) # bringing back the link
+
+    info("\nExperiment Completed!\n")
     MiniNDNCLI(ndn.net)
     ndn.stop()
 
